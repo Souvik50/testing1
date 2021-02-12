@@ -1,65 +1,65 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from 'react';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const List = ({ items }) => {
+  const [filterItems, setFilterdItems] = React.useState(items)
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+  const filteredItems = (e) => {
+    const searchValue = e.target.value;
+    const currentItems = [...items];
+    const matchingItems = currentItems.filter(item => item.includes(searchValue))
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+    setFilterdItems(matchingItems)
+  }
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+  return(
+    <>
+    <input onChange={filteredItems}/>
+    <ul>
+      {filterItems.map(item => (
+        <li key={item}>{item}</li>
+      ))}
+      <li><a href="/about">About Page</a></li>
+    </ul>
+    </>
+  );
 }
+
+// class List extends React.Component {
+
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       filteredItems: this.props.items
+//     }
+//   }
+
+//   filterItems = (e) => {
+//     const searchValue = e.target.value;
+//     const currentItems = [...this.props.items];
+//     console.log(currentItems)
+//     const matchingItems = currentItems.filter(item => item.includes(searchValue));
+
+//     this.setState({
+//       filteredItems: matchingItems
+//     })
+//   }
+
+//   render() {
+//     return(
+//       <>
+//       <input onChange={this.filterItems}/>
+//       <ul>
+//         {this.state.filteredItems.map((item) => (
+//           <li key={item}>{item}</li>
+//         ))}
+//       </ul>
+//       </>
+//     );
+
+//   }
+// }
+
+const ListContainer = () => <List items={['React.js', 'Next.js', 'Enjoy.js']}/>
+
+export default ListContainer;
